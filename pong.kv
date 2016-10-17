@@ -22,9 +22,14 @@
     orientation: 'horizontal'
     canvas.before:
         Rectangle:
-            pos: self.pos
-            size: self.size
+            pos: self.center_x - 5, 0
+            size: self.center_x + 5 , self.height
             source: 'bill.jpg'
+
+        Rectangle:
+            pos: self.center_x + 5, 0
+            size: - self.center_x - 5, self.height
+            source: 'donald.jpg'
 
 	canvas:
 		Rectangle:
