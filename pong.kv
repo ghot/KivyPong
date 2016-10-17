@@ -19,6 +19,13 @@
     player1: player_left
     player2: player_right
 
+    orientation: 'horizontal'
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'bill.jpg'
+
 	canvas:
 		Rectangle:
 			pos: self.center_x - 5, 0
