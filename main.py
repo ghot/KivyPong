@@ -11,7 +11,8 @@ kivy.require('1.0.9')
 class PongPaddle(Widget):
 
     score = NumericProperty(0)
-
+    bill = Sound()
+    
     def bounce_ball(self, ball):
         if self.collide_widget(ball):
             vx, vy = ball.velocity
