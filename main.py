@@ -6,6 +6,7 @@ from kivy.properties import NumericProperty, ReferenceListProperty,\
     ObjectProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
+from kivy.core.audio import SoundLoader
 import kivy
 kivy.require('1.0.9')
 
@@ -47,6 +48,9 @@ class PongGame(Widget):
     ball = ObjectProperty(None)
     player1 = ObjectProperty(None)
     player2 = ObjectProperty(None)
+    
+    headOfAPin = SoundLoader.load('pin.wav')
+    buildAWall = SoundLoader.load('wall.wav')
 
     def serve_ball(self, vel=(4, difficulty)):
         self.ball.center = self.center
@@ -64,9 +68,11 @@ class PongGame(Widget):
         if self.player1.score < score or self.player2.score < score:
             if self.ball.x < self.x:
                 self.player2.score += 1
+                self.headOfAPin.play()
                 self.serve_ball(vel=(4, difficulty))
             if self.ball.x > self.width:
                 self.player1.score += 1
+                self.buildAWall.play()
                 self.serve_ball(vel=(-4, difficulty))
         else:
             MainMenuApp().run()
