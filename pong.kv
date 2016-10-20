@@ -1,5 +1,13 @@
 #:kivy 1.0.9
 
+<MainMenu>:
+    orientation: 'horizontal'
+    canvas.before:
+        BorderImage:
+            pos: self.pos
+            size: self.size
+            source: 'main_bill.jpg'
+
 <PongBall>:
     size: 50, 50
     canvas:
