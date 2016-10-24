@@ -51,8 +51,8 @@ class PongGame(Widget):
     player1 = ObjectProperty(None)
     player2 = ObjectProperty(None)
 
-    headOfAPin = SoundLoader.load('sounds/pin.wav')
-    buildAWall = SoundLoader.load('sounds/wall.wav')
+    headOfAPin = SoundLoader.load('sounds/bill/pin.wav')
+    buildAWall = SoundLoader.load('sounds/donald/wall.wav')
 
     def serve_ball(self, vel=(4, difficulty)):
         self.ball.center = self.center
@@ -67,7 +67,7 @@ class PongGame(Widget):
         if (self.ball.y < 0) or (self.ball.top > self.height):
             self.ball.velocity_y *= -1
 
-        if self.player1.score < score or self.player2.score < score:
+        if self.player1.score < self.score or self.player2.score < self.score:
             if self.ball.x < self.x:
                 self.player2.score += 1
                 self.headOfAPin.play()
@@ -87,6 +87,9 @@ class PongGame(Widget):
 
 
 class MainMenu(GridLayout, App):
+
+    theme = SoundLoader.load('sounds/menu_rap.wav')
+    theme.play()
 
     def build(self):
         game = PongGame()
