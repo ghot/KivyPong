@@ -1,0 +1,6 @@
+{
+  "name": "PonGline",
+  "tagline": "The Pong of the Future - Today!",
+  "body": "### Welcome to the PonGline Page\r\nThis is currently a proof of concept for creating a functional port of the infamous game 'Pong' to all devices using Kivy and Python. It is all in good humor and fun as well as to build enough experience to create another, more professional app in the workings.\r\n\r\n### Basic Game - Added Functions\r\nAs opposed to simply recreating the game of olden times, we decided to add features to it based on the concept of having the game playable online. As such, we will work on adding characters to play - and yes, they will all most likely be as ridiculous as the two are now. More images, more sound files, more fun, less general boredom for all.\r\n\r\n### This work does not represent any political or personal beliefs of my colleague or I. It is simply humorous. Try not to overthink it!\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
