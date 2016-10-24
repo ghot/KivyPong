@@ -3,10 +3,35 @@
 <MainMenu>:
     orientation: 'horizontal'
     canvas.before:
-        BorderImage:
+        Rectangle:
+            source: 'main_bill.jpg'
             pos: self.pos
             size: self.size
-            source: 'main_bill.jpg'
+    GridLayout:
+        cols: 1
+        row_force_default: True
+        row_default_height: '50dp'
+        row_default_width: '200dp'
+        pos: (root.width * .45, root.height * .55)
+        Label:
+            text: "Main Menu"
+            font_size: 50
+        Button:
+            id: play
+            text: 'Play'
+            on_press: root.run()
+        Button:
+            id: difficulty
+            text: 'Difficulty'
+            on_press: root.diff()
+        Button:
+            id: score
+            text: 'Score'
+            on_press: root.scr()
+        Button:
+            id: exit
+            text: 'Exit'
+            on_press: quit()
 
 <PongBall>:
     size: 50, 50
