@@ -51,8 +51,8 @@ class PongGame(Widget):
     player1 = ObjectProperty(None)
     player2 = ObjectProperty(None)
 
-    headOfAPin = SoundLoader.load('pin.wav')
-    buildAWall = SoundLoader.load('wall.wav')
+    headOfAPin = SoundLoader.load('sounds/pin.wav')
+    buildAWall = SoundLoader.load('sounds/wall.wav')
 
     def serve_ball(self, vel=(4, difficulty)):
         self.ball.center = self.center
