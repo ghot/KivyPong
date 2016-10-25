@@ -10,9 +10,9 @@ from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
 import kivy
-import os
+import platform
 
-op = os.uname()
+op = platform.system()
 
 kivy.require('1.0.9')
 
@@ -55,7 +55,7 @@ class PongGame(Widget):
     player1 = ObjectProperty(None)
     player2 = ObjectProperty(None)
 
-    if op[0] is 'Windows':
+    if op is 'Windows':
         headOfAPin = SoundLoader.load('sounds\\bill\\pin.wav')
         buildAWall = SoundLoader.load('sounds\\donald\\wall.wav')
     else:
@@ -101,7 +101,7 @@ class PongGame(Widget):
 
 
 class MainMenu(GridLayout, App):
-    if op[0] is 'Windows':
+    if op is 'Windows':
         theme = SoundLoader.load('sounds\\menu_rap.wav')
     else:
         theme = SoundLoader.load('sounds/menu_rap.wav')
