@@ -67,7 +67,7 @@ class PongGame(Widget):
         if (self.ball.y < 0) or (self.ball.top > self.height):
             self.ball.velocity_y *= -1
 
-        if self.player1.score < self.score or self.player2.score < self.score:
+        if self.player1.score < score or self.player2.score < score:
             if self.ball.x < self.x:
                 self.player2.score += 1
                 self.headOfAPin.play()
@@ -89,6 +89,8 @@ class PongGame(Widget):
 class MainMenu(GridLayout, App):
 
     theme = SoundLoader.load('sounds/menu_rap.wav')
+    theme.loop = True
+    theme.volume = 0.3
     theme.play()
 
     def build(self):
