@@ -1,5 +1,7 @@
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.label import Label
+from kivy.uix.popup import Popup
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty, ReferenceListProperty, \
@@ -8,6 +10,9 @@ from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
 import kivy
+import os
+
+op = os.uname()
 
 kivy.require('1.0.9')
 
@@ -46,19 +51,23 @@ class PongBall(Widget):
 
 
 class PongGame(Widget):
-    global score
     ball = ObjectProperty(None)
     player1 = ObjectProperty(None)
     player2 = ObjectProperty(None)
 
-    headOfAPin = SoundLoader.load('sounds/bill/pin.wav')
-    buildAWall = SoundLoader.load('sounds/donald/wall.wav')
+    if op[0] is 'Windows':
+        headOfAPin = SoundLoader.load('sounds\\bill\\pin.wav')
+        buildAWall = SoundLoader.load('sounds\\donald\\wall.wav')
+    else:
+        headOfAPin = SoundLoader.load('sounds/bill/pin.wav')
+        buildAWall = SoundLoader.load('sounds/donald/wall.wav')
 
     def serve_ball(self, vel=(4, difficulty)):
         self.ball.center = self.center
         self.ball.velocity = vel
 
     def update(self, dt):
+        global score
         self.ball.move()
 
         self.player1.bounce_ball(self.ball)
@@ -76,10 +85,13 @@ class PongGame(Widget):
                 self.player1.score += 1
                 self.buildAWall.play()
                 self.serve_ball(vel=(-4, 0))
-        else:
+        if self.player1.score >= score or self.player2.score >= score:
+            popup = Popup(title='Winner!',
+                          content=(Label(text="Player 1 wins!")),
+                          auto_dismiss=False)
+            popup.open()
             self.buildAWall.unload()
             self.headOfAPin.unload()
-            MainMenu().run()
 
     def on_touch_move(self, touch):
         if touch.x < self.width / 3:
@@ -89,7 +101,10 @@ class PongGame(Widget):
 
 
 class MainMenu(GridLayout, App):
-    theme = SoundLoader.load('sounds/menu_rap.wav')
+    if op[0] is 'Windows':
+        theme = SoundLoader.load('sounds\\menu_rap.wav')
+    else:
+        theme = SoundLoader.load('sounds/menu_rap.wav')
     theme.loop = True
     theme.volume = 0.3
     theme.play()
@@ -107,10 +122,19 @@ class MainMenu(GridLayout, App):
 
     def scr(self):
         global score
-        score = 10
+        score = 5
+
+    def on_pause(self):
+        self.theme.stop()
+        return True
+
+    def on_resume(self):
+        self.theme.play()
+        pass
 
 
 class MainMenuApp(App):
+    icon = 'images/icon.png'
 
     def build(self):
         self.title = "Main Menu"
