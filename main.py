@@ -13,19 +13,20 @@ kivy.require('1.0.9')
 
 Builder.load_file('pong.kv')
 
-difficulty = 0
+difficulty = 1.1
 score = 20
 
 
 class PongPaddle(Widget):
     score = NumericProperty(0)
+    global difficulty
 
     def bounce_ball(self, ball):
         if self.collide_widget(ball):
             vx, vy = ball.velocity
             offset = (ball.center_y - self.center_y) / (self.height / 2)
             bounced = Vector(-1 * vx, vy)
-            vel = bounced * 1.1
+            vel = bounced * difficulty
             ball.velocity = vel.x, vel.y + offset
 
 
@@ -46,7 +47,6 @@ class PongBall(Widget):
 
 class PongGame(Widget):
     global score
-    global difficulty
     ball = ObjectProperty(None)
     player1 = ObjectProperty(None)
     player2 = ObjectProperty(None)
@@ -71,12 +71,14 @@ class PongGame(Widget):
             if self.ball.x < self.x:
                 self.player2.score += 1
                 self.headOfAPin.play()
-                self.serve_ball(vel=(4, difficulty))
+                self.serve_ball(vel=(4, 0))
             if self.ball.x > self.width:
                 self.player1.score += 1
                 self.buildAWall.play()
-                self.serve_ball(vel=(-4, difficulty))
+                self.serve_ball(vel=(-4, 0))
         else:
+            self.buildAWall.unload()
+            self.headOfAPin.unload()
             MainMenu().run()
 
     def on_touch_move(self, touch):
@@ -87,13 +89,13 @@ class PongGame(Widget):
 
 
 class MainMenu(GridLayout, App):
-
     theme = SoundLoader.load('sounds/menu_rap.wav')
     theme.loop = True
     theme.volume = 0.3
     theme.play()
 
     def build(self):
+        self.title = "Pong Game"
         game = PongGame()
         game.serve_ball()
         Clock.schedule_interval(game.update, 1.0 / 60.0)
@@ -101,7 +103,7 @@ class MainMenu(GridLayout, App):
 
     def diff(self):
         global difficulty
-        difficulty = 6
+        difficulty *= 2
 
     def scr(self):
         global score
@@ -111,6 +113,7 @@ class MainMenu(GridLayout, App):
 class MainMenuApp(App):
 
     def build(self):
+        self.title = "Main Menu"
         return MainMenu()
 
 
